@@ -1,13 +1,32 @@
-import { ThemeProvider } from "@mui/material/styles";
-import Routers from "./Routers";
-import StylesGlobal from "./config/styles/GlobalStyles";
-import lightTheme, { darkTheme } from "./config/styles/themes/Default";
+import React, { useState } from "react";
+import Router from "./Routers";
+import GlobalStyles from "./config/styles/GlobalStyles";
+import { Button, ThemeProvider } from "@mui/material";
+import { lightTheme, darkTheme } from "./config/styles/themes/Default";
 
-export default function App() {
+function App() {
+  const [theme, setTheme] = useState(darkTheme);
+
+  function changeTheme() {
+    if (theme !== darkTheme) {
+      setTheme(darkTheme);
+      return;
+    }
+
+    setTheme(lightTheme);
+  }
+
   return (
-    <ThemeProvider theme={lightTheme}>
-      <StylesGlobal />
-      <Routers />
-    </ThemeProvider>
+    <div>
+      <ThemeProvider theme={theme}>
+        <Button onClick={changeTheme} sx={{ position: "absolute" }}>
+          Change Theme
+        </Button>
+        <GlobalStyles />
+        <Router />
+      </ThemeProvider>
+    </div>
   );
 }
+
+export default App;
